@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class SafeInput {
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static String getRegExString(String regex, String prompt) {
+        String input;
+        boolean isValid;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine();
+            isValid = input.matches(regex);
+            if (!isValid) {
+                System.out.println("Invalid input. Please try again.");
+            }
+        } while (!isValid);
+        return input;
+    }
+
+    public static int getRangedInt(int min, int max, String prompt) {
+        int input;
+        boolean isValid;
+        do {
+            System.out.print(prompt);
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next();
+            }
+            input = scanner.nextInt();
+            scanner.nextLine();
+            isValid = input >= min && input <= max;
+            if (!isValid) {
+                System.out.println("Input out of range. Please enter a number between " + min + " and " + max + ".");
+            }
+        } while (!isValid);
+        return input;
+    }
+
+    public static boolean getYNConfirm(Scanner pipe, String prompt) {
+        char response;
+
+        pipe.nextLine();
+        do {
+            System.out.print("\n" + prompt + " [Y/N]: ");
+            response = pipe.nextLine().toUpperCase().charAt(0);
+        } while (response != 'Y' && response != 'N');
+        return response == 'Y';
+    }
+}
